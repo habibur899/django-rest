@@ -14,3 +14,7 @@ class AiquestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Aiquest
         fields = '__all__'
+
+#Deserializers
+def create(self, validated_data):
+    return Aiquest.objects.create(**validated_data)

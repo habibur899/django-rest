@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('aiinfo/', views.aiquest_info),
-    path('aiinfo/<int:pk>/', views.aiquest_info_single)
+    path('aiinfo/<int:pk>/', views.aiquest_info_single),
+    path('aicreate/', views.aiquest_create)
 ]
