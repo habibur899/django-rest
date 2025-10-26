@@ -4,7 +4,7 @@ import json
 URL = "http://127.0.0.1:8000/aicreate/"
 
 data = {
-    'id': 1,
+    'id': 6,
     'teacher_name': 'Alice',
     'course_name': 'Machine Learning',
     'course_duration': 12,
