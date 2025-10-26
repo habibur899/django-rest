@@ -69,3 +69,17 @@ def aiquest_create(request):
 
         json_data = JSONRenderer().render(serializer.errors)
         return HttpResponse(json_data, content_type='application/json')
+
+    # Delete data
+    if request.method == 'DELETE':
+        json_data = request.body
+        # JSON to Stream
+        stream = io.BytesIO(json_data)
+        # Stream to Python
+        pythondata = JSONParser().parse(stream)
+        # Get object
+        ai = Aiquest.objects.get(id=pythondata['id'])
+        ai.delete()
+        res = {'msg': 'Successfully! Deleted data'}
+        json_data = JSONRenderer().render(res)
+        return HttpResponse(json_data, content_type='application/json')
