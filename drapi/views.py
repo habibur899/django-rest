@@ -49,3 +49,10 @@ def aiquest_create(request, pk=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # Delete Method
+    if request.method == 'DELETE':
+        id = pk
+        ai = Aiquest.objects.get(pk=id)
+        ai.delete()
+        return Response({'msg': 'Data Deleted'})
