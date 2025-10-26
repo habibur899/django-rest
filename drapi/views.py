@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 def aiquest_create(request, pk=None):
     if request.method == 'GET':
         id = pk
@@ -28,4 +28,24 @@ def aiquest_create(request, pk=None):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # Put Method
+    if request.method == 'PUT':
+        id = pk
+        ai = Aiquest.objects.get(pk=id)
+        serializer = AiquestSerializer(ai, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # Patch Method
+    if request.method == 'PATCH':
+        id = pk
+        ai = Aiquest.objects.get(pk=id)
+        serializer = AiquestSerializer(ai, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
