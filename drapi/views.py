@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from .models import Aiquest
 from .serializers import AiquestSerializer
-from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
 
-@api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
-def aiquest_create(request, pk=None):
-    if request.method == 'GET':
+
+class AiquestCreate(APIView):
+    def get(self, request, pk=None):
         id = pk
         if id is not None:
             # complex data
@@ -23,7 +23,7 @@ def aiquest_create(request, pk=None):
             serializer = AiquestSerializer(ai, many=True)
             return Response(serializer.data)
     # Post Method
-    if request.method == 'POST':
+    def post(self, request):
         serializer = AiquestSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -31,7 +31,7 @@ def aiquest_create(request, pk=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Put Method
-    if request.method == 'PUT':
+    def put(self, request, pk):
         id = pk
         ai = Aiquest.objects.get(pk=id)
         serializer = AiquestSerializer(ai, data=request.data)
@@ -41,7 +41,7 @@ def aiquest_create(request, pk=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Patch Method
-    if request.method == 'PATCH':
+    def patch(self, request, pk):
         id = pk
         ai = Aiquest.objects.get(pk=id)
         serializer = AiquestSerializer(ai, data=request.data, partial=True)
@@ -51,7 +51,7 @@ def aiquest_create(request, pk=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # Delete Method
-    if request.method == 'DELETE':
+    def delete(self, request, pk):
         id = pk
         ai = Aiquest.objects.get(pk=id)
         ai.delete()
