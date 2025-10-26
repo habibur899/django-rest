@@ -15,6 +15,15 @@ class AiquestSerializer(serializers.ModelSerializer):
         model = Aiquest
         fields = '__all__'
 
-#Deserializers
-def create(self, validated_data):
-    return Aiquest.objects.create(**validated_data)
+    # Deserializers
+    def create(self, validated_data):
+        return Aiquest.objects.create(**validated_data)
+
+    # Update method
+    def update(self, instance, validated_data):
+        instance.teacher_name = validated_data.get('teacher_name', instance.teacher_name)
+        instance.course_name = validated_data.get('course_name', instance.course_name)
+        instance.course_duration = validated_data.get('course_duration', instance.course_duration)
+        instance.seat = validated_data.get('seat', instance.seat)
+        instance.save()
+        return instance
