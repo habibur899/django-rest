@@ -7,4 +7,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('aicreate/', views.AiquestCreate.as_view()),
     path('aicreate/<int:pk>/', views.AiquestCreate.as_view())
+
 ]
